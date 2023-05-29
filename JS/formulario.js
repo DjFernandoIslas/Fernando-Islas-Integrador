@@ -1,7 +1,6 @@
 // VARIABLES
 
-const cardsContainer = document.querySelectorAll('.btn.card');
-
+const cardsContainer = document.querySelectorAll('.btn.card')
 
 const price = 200
 
@@ -46,20 +45,17 @@ totalTag.innerText = totalText
 
 // FUNCIONES UTILITARIAS
 
-const totalPrice = () => { //Funcion de cuenta
-
-    if(!tickets || !category) return;
+const totalPrice = () => {
+    if (!tickets || !category) return;
 
     const totalValue = price * tickets
-    const discount = (totalValue / 100) * 10
+    const discount = (totalValue/100) * categories[category].percent
 
     total = totalValue - discount
-
-
     totalTag.innerText = totalText + total
-}
+  }
 
-totalPrice()
+  totalPrice()
 
 // EVENTOS
 
@@ -74,7 +70,8 @@ const setCategory = (e) =>{
     category = option
     const index = categories[category].value
     const container = cardsContainer[index]
-    container.className = 'btn card m-0 ' + colors[index];
+
+    selected = index
 }
 
 const setTickets = (e) => {
@@ -83,18 +80,16 @@ const setTickets = (e) => {
     if(value < 0 || isNaN(value)){
     e.target.value = 0
     total = null
-    return}
-
+    return
+    }
     tickets = value
-    totalPrice()
+    totalPrice();
 }
-
-// EVENTOS DE BOTONES
 
 const resetCategories = () => {
     total = null
     selected = null
-    nulleventsAssignmentAll()
+    eventsAssignmentAll()
     totalTag.innerText = totalText
 }
 
@@ -106,15 +101,34 @@ const reset = (e) => {
     input.value = ''
     
     select.value = 'none'
+
+    resetCategories()
 }
 
 const submit = (e) => {
     e.preventDefault()
-    console.log('Informacion enviada')
+
+    const {firstname, lastname, email, tickets, category} = form
+
+    const verified = {
+        firstname: firstname.value !== '', 
+        lastname: lastname.value !== '', 
+        email: email.value.includes('@'), 
+        tickets: tickets.value > 0, 
+        category: category.value !== 'none',
+    }
+
+    const values = Object.values(verified)
+    const submitAccepted = values.every(value => value)
+    console.log(submitAccepted)
+    
+    submitAccepted
+    ? alert ('Todos datos fueron validados con éxito')
+    : alert ('Completa todos los campos')
 }
 
 
-
+// asignacion de eventos ----------------------------------------
 form.category.addEventListener('change', setCategory)
 form.tickets.addEventListener('change', setTickets)
 form.tickets.addEventListener('keyup', setTickets)
