@@ -4,6 +4,8 @@ const cardsContainer = document.querySelectorAll('.btn.card')
 
 const price = 200
 
+let calculated = false;
+
 const categories = {
     a:{percent: 80, value: '0'},
     b:{percent: 50, value: '0'},
@@ -55,7 +57,7 @@ const totalPrice = () => {
     totalTag.innerText = totalText + total
   }
 
-  totalPrice()
+
 
 // EVENTOS
 
@@ -72,9 +74,13 @@ const setCategory = (e) =>{
     const container = cardsContainer[index]
 
     selected = index
+
+    if (calculated && category) {
+        totalPrice()}
 }
 
 const setTickets = (e) => {
+    if (calculated) return;
     const {value} = e.target
     console.log(value)
     if(value < 0 || isNaN(value)){
@@ -83,10 +89,13 @@ const setTickets = (e) => {
     return
     }
     tickets = value
-    totalPrice();
+
+    if (calculated && category) {
+        totalPrice()}
 }
 
 const resetCategories = () => {
+    if (calculated) return;
     total = null
     selected = null
     eventsAssignmentAll()
@@ -121,10 +130,18 @@ const submit = (e) => {
     const values = Object.values(verified)
     const submitAccepted = values.every(value => value)
     console.log(submitAccepted)
-    
-    submitAccepted
-    ? alert ('Todos datos fueron validados con éxito')
-    : alert ('Completa todos los campos')
+
+    if(submitAccepted){
+        totalPrice()
+        alert ('El calculo de tus descuentos fue realizado con éxito!')
+        calculated = true
+    } else{
+        alert ('Completa todos los campos')
+    }
+
+    setTimeout(() => {
+        calculated = false;
+      }, 1000);
 }
 
 
@@ -134,4 +151,4 @@ form.tickets.addEventListener('change', setTickets)
 form.tickets.addEventListener('keyup', setTickets)
 
 resetBtn.addEventListener('click', reset)
-form.addEventListener('submit', submit)
+submitBtn.addEventListener('click', submit)
