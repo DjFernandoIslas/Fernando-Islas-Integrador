@@ -1,7 +1,5 @@
 // VARIABLES
 
-const cardsContainer = document.querySelectorAll('.btn.card')
-
 const price = 200
 
 let calculated = false;
