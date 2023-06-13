@@ -1,5 +1,6 @@
 const cards = document.querySelectorAll('.card')
 
+
 cards.forEach((card) => {
   const borderColor = window.getComputedStyle(card).borderColor
 

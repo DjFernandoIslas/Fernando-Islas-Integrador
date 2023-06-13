@@ -149,4 +149,4 @@ form.tickets.addEventListener('change', setTickets)
 form.tickets.addEventListener('keyup', setTickets)
 
 resetBtn.addEventListener('click', reset)
-submitBtn.addEventListener('click', submit)
+submitBtn.addEventListener('click', submit) 

@@ -24,4 +24,4 @@ const updateCategory = (e) => {
   // Asignar evento de clic a los contenedores de tarjetas
   cardsContainer.forEach((card) => {
     card.addEventListener('click', updateCategory);
-  }); 
+  });
